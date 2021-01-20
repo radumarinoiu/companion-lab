@@ -7,6 +7,12 @@ from sklearn.cluster import AgglomerativeClustering
 
 
 def solve(d):
+    fig, ax = plt.subplots(figsize=(5, 5))
+    plt.scatter(d['X1'], d['X2'])
+    for index in range(len(d)):
+        ax.annotate(str(index), (d["X1"][index], d["X2"][index]))
+    plt.show()
+
     ac_single = AgglomerativeClustering(linkage='single', n_clusters=None, distance_threshold=0)
     ac_single.fit(d)
 
@@ -43,24 +49,24 @@ def solve(d):
     for index in range(len(d)):
         ax.annotate(str(index), (d["X1"][index], d["X2"][index]))
     plt.show()
+
     fig, ax = plt.subplots(figsize=(5, 5))
     plt.scatter(d['X1'], d['X2'], c=clusters_complete)
     for index in range(len(d)):
         ax.annotate(str(index), (d["X1"][index], d["X2"][index]))
     plt.show()
 
-    # Single linkage seems to be more direct, splitting anywhere if
-    # the distance is big enough
-    
+    # Single linkage seems to be more direct (rough),
+    # splitting anywhere if the distance is big enough
+
     # Complete linkage seems to be more balanced, sacrificing tighter
     # clusters for inclusion of more distant (or isolated) values
     # in existing clusters
 
 
 if __name__ == '__main__':
-    d = pd.DataFrame({
+    data = pd.DataFrame({
         "X1": [-4, -3, -2, -1, 1, 1, 2, 3, 3, 4],
         "X2": [-2, -2, -2, -2, -1, 1, 3, 2, 4, 3]
     })
-    solve(d)
-
+    solve(data)
